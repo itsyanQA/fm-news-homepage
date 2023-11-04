@@ -1,0 +1,15 @@
+.content-container {
+}
+
+.content-grid {
+  display: grid;
+  grid-template-columns: 3fr 1.37fr;
+  padding: 45px 0 70px 0;
+  column-gap: 30px;
+
+  @media screen and (max-width: 600px) {
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+  }
+}

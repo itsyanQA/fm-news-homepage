@@ -1,0 +1,44 @@
+.mobile-aside {
+  width: 70%;
+  position: fixed;
+  height: 100vh;
+  top: 0;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  padding: 25px;
+  gap: 60px;
+  transition: transform 0.3s ease-in;
+  z-index: 10;
+  right: 0;
+
+  @media screen and (min-width: 600px) {
+    display: none;
+  }
+
+  &--is-hidden {
+    transform: translateX(400px);
+    transition: transform 0.3s ease-out;
+  }
+
+  &__close-btn {
+    align-self: flex-end;
+  }
+
+  &__nav {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    & a {
+      color: var(--dark-grayish-blue);
+      text-decoration: none;
+      font-size: 18px;
+      font-weight: 500;
+
+      &:active {
+        color: var(--soft-orange);
+      }
+    }
+  }
+}
