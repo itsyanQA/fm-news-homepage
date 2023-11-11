@@ -1,4 +1,4 @@
-import { SetStateAction, Dispatch, useEffect } from "react";
+import { SetStateAction, Dispatch, useEffect, useRef } from "react";
 import { ReactComponent as CloseIcon } from "../../assets/svg/icon-menu-close.svg";
 import "./MobileNav.scss";
 
@@ -8,22 +8,32 @@ type MobileNavProps = {
 };
 
 export default function MobileNav({ isMenuOpen, setIsMenuOpen }: MobileNavProps) {
-  const toggleMenu = () => setIsMenuOpen((isOpen) => !isOpen);
+  const toggleMenu = () =>
+    setIsMenuOpen((isOpen) => {
+      if (isOpen) document.body.classList.remove("backdrop");
+      return !isOpen;
+    });
+  const isMenuOpenRef = useRef<boolean | null>(null);
 
-  // const closeMenuOnBlur = (clickEvent: any) => {
-  //   console.log(clickEvent?.target?.classList);
-  //   console.log([...clickEvent?.target?.classList]);
+  const closeMenuOnBlur = (clickEvent: any) => {
+    if (!isMenuOpenRef?.current) return;
 
-  //   if (![...clickEvent?.target?.classList]?.includes("mobile-aside--is-open")) {
-  //     return toggleMenu();
-  //   }
-  // };
+    const clsToIgnore: string[] = ["mobile-aside", "header__mobile-menu-open"];
+    const isEventContainerHasIgnoredCls: boolean = [...clickEvent?.target?.classList].some((cls) => clsToIgnore.includes(cls));
 
-  // useEffect(() => {
-  //   window.addEventListener("click", closeMenuOnBlur);
+    if (!isEventContainerHasIgnoredCls && clickEvent?.target?.classList?.length !== 0) {
+      return toggleMenu();
+    }
+  };
+  useEffect(() => {
+    window.addEventListener("click", closeMenuOnBlur);
 
-  //   return () => window.removeEventListener("click", closeMenuOnBlur);
-  // }, []);
+    return () => window.removeEventListener("click", closeMenuOnBlur);
+  }, []);
+
+  useEffect(() => {
+    isMenuOpenRef.current = isMenuOpen;
+  }, [isMenuOpen]);
 
   return (
     <aside className={`mobile-aside ${isMenuOpen ? "mobile-aside--is-open" : "mobile-aside--is-hidden"}`}>

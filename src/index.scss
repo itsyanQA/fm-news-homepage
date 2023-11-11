@@ -28,10 +28,19 @@ body {
   max-width: 75%;
   margin: auto;
   padding: 80px 0;
+  transition: background-color 0.3s ease-in;
+
+  @media screen and (min-width: 600px) and (max-width: 900px) {
+    max-width: 95%;
+  }
 
   @media screen and (max-width: 600px) {
     max-width: 91%;
     padding: 20px 0;
+  }
+
+  &.backdrop {
+    background-color: var(--grayish-blue);
   }
 }
 

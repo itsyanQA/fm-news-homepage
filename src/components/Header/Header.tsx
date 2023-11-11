@@ -6,8 +6,6 @@ import MobileNav from "../MobileNav/MobileNav";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
-  console.log(isMenuOpen);
-  
 
   return (
     <header className="header">
@@ -19,7 +17,14 @@ export default function Header() {
         <a href="javascript:void(0);">Trending</a>
         <a href="javascript:void(0);">Categories</a>
       </nav>
-      <MenuIcon className="header__mobile-menu-open" onClick={() => setIsMenuOpen((isOpen) => !isOpen)} />
+      <MenuIcon
+        className="header__mobile-menu-open"
+        onClick={() => {
+          document.body.classList.add("backdrop");
+
+          setIsMenuOpen((isOpen) => !isOpen);
+        }}
+      />
       <MobileNav isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
     </header>
   );
